@@ -1,0 +1,30 @@
+.left {
+    background-color: var(--chat-box-color);
+    flex: 1 1 100%;
+    border-right: 1px solid var(--grey-color);
+    padding: 10px 0;
+    height: 100%;
+}
+.left .chat_box {
+    height: 100%;
+    width: 100%;
+}
+
+
+/* chat box right design */
+
+
+@media (min-width:776px) {
+    .left {
+        flex: 0 0 35%;
+    }
+   
+}
+
+@media (min-width:1024px) {
+    .left {
+        flex: 0 0 25%;
+
+    }
+    
+}

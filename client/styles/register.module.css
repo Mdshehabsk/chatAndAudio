@@ -1,0 +1,75 @@
+
+
+.register_wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register_div {
+    width: clamp(400px,100%,400px);
+    background-color: var(--primary-color);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.register_header {
+    text-align: center;
+    color: var(--grey-color);
+}
+.register_form{
+    margin: 0 auto;
+    width: 90%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.register_input_field{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 10px 0;
+    position: relative;
+}
+.register_input_field label {
+    color: var(--grey-color);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.register_input_field input {
+    height: 40px;
+    padding: 4px 8px;
+    background-color: var(--secendary-color);
+    border: none;
+    outline: none;
+    color: var(--grey-color);
+    border-radius: 2px;
+    border: 1px solid transparent;
+    transition: .4s ease;
+}
+.register_input_field p {
+    color: var(--red-color);
+}
+.register_input_field i {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    color: var(--white-color);
+    cursor: pointer;
+}
+.register_input_field input:focus {
+    border: 1px solid var(--blue-color);
+}
+.register_input_field input[type=submit] {
+    background-color: var(--blue-color);
+    cursor: pointer;
+    color: var(--white-color);
+}
+.register_input_field span {
+    color: var(--grey-color);
+}
+.register_input_field span a {
+    color: var(--red-color);
+}

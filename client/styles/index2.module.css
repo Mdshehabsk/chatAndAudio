@@ -1,0 +1,49 @@
+
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: space-between;
+}
+/* chat box left desing */
+.container > .left {
+    background-color: var(--chat-box-color);
+    flex: 1 1 100%;
+    border-right: 1px solid var(--grey-color);
+    padding: 10px 0;
+    display: none;
+}
+.container .left .chat_box {
+    height: 100%;
+    width: 100%;
+}
+
+/* chat box right design */
+
+.container > .right {
+    flex: 1 0 100%;
+    height: 100vh;
+    position: relative;
+}
+.container > .right .message_box {
+    height: 100%;
+    width: 100%; 
+}
+
+@media (min-width:776px) {
+    .container > .left {
+        flex: 0 0 35%;
+        display: block;
+    }
+    .container > .right {
+        flex: 1 0 65%;
+    }
+}
+
+@media (min-width:1024px) {
+    .container > .left {
+        flex: 0 0 25%;
+    }
+    
+}

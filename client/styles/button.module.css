@@ -1,0 +1,17 @@
+
+
+.btn {
+    width: 120px;
+    padding: 10px 0;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    color: white;
+}
+
+.green {
+    background-color: rgb(77, 153, 77);
+}
+.red {
+    background-color: rgb(218, 31, 71);
+}

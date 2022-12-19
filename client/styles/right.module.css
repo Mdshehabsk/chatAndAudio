@@ -1,0 +1,23 @@
+
+
+
+/* chat box right design */
+
+.right {
+    display: none;
+    position: relative;
+}
+
+@media (min-width:776px) {
+
+    .right {
+        flex: 1 0;
+        display: block;
+
+    }
+}
+
+@media (min-width:1024px) {
+    
+    
+}

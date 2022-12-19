@@ -1,0 +1,99 @@
+
+
+.message_input {
+    width: 100%;
+    height: 70px;
+    background-color: var(--background-color);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.message_input  .message_input_container{
+    display: flex;
+    width: 90%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    gap: 10px;
+}
+ /* all icon design at a time */
+.message_input  .message_input_container i {
+    font-size: 20px;
+     color: var(--text-color);
+}
+ /* all icon design at a time */
+.message_input  .message_input_container .input_box {
+    flex: 1 1 90%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: .4s ease;
+}
+.message_input  .message_input_container .input_box form {
+    width: 100%;
+    height: 100%;
+}
+.message_input  .message_input_container .input_box  input {
+    border: none;
+    outline: none;
+    background-color: var(--secendary-color);
+    color: var(--text-color);
+    padding: 4px 20px;
+    width: 100%;
+    height: 45px;
+    border-radius: 30px;
+}
+.message_input  .message_input_container .input_box .send_icon {
+    display: none;
+}
+
+
+
+
+.message_input  .message_input_container .input_icon {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+    flex: 1 1 10%;
+}
+
+.message_input  .message_input_container .input_icon  div {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.message_input  .message_input_container .input_icon  div:hover i {
+    color: var(--blue-color);
+}
+/* if a message stirng length greater then zero so this style will call */
+
+.message_input  .message_input_container .input_box .show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-radius: 40%;
+    width: 40px;
+    height: 40px;
+    color: var(--blue-color);
+}
+.message_input  .message_input_container .input_box .show i {
+    color: var(--blue-color);
+}
+.message_input  .message_input_container .input_box.full{
+    flex: 1 1 100%;
+    transition: .4s ease;
+}
+.message_input  .message_input_container .input_icon.none {
+    display: none;
+}
+@media (min-width:776px) {
+   
+}
