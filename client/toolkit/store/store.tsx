@@ -5,8 +5,10 @@ import  userAuthReducer  from '../slice/userAuthSlice'
 import  socketReducer from '../slice/socketSlice'
 import callReducer from '../slice/callSlice'
 import RTCReducer from '../slice/RTCSlice'
+import messageReducer from '../slice/messageSlice'
 export const store = configureStore({
   reducer: {
+    message: messageReducer,
     userAuth: userAuthReducer,
     socket:socketReducer,
     call:callReducer,

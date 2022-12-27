@@ -26,6 +26,12 @@
     cursor: pointer;
     transition: all .4s ease;
 }
+.active {
+    color: var(--blue-color);
+    font-size: 25px;
+    cursor: pointer;
+    transition: all .4s ease;
+}
 .menu_bar .menu_bar_container i:hover {
     color: var(--blue-color);
 }

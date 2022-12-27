@@ -4,10 +4,12 @@ import io from 'socket.io-client'
 export const socketIO = io('http://localhost:4001')
 
 interface socketStateType {
-    recieveMessage:any | null,
+    messageType:false
+    socketMessage:any
 }
 const initialState : socketStateType = {
-    recieveMessage:null,
+    socketMessage:[],
+    messageType:false
 }
 const messageSlice = createSlice(({
     name:'messageSlice',
@@ -15,18 +17,21 @@ const messageSlice = createSlice(({
     reducers:{
         sendMessage: (state,action) => {
             const data = action.payload
+            state.socketMessage.push(data)
             socketIO.emit('send-message',data)
         },
-        recieveMessage : (state,action) => {
-            state.recieveMessage = action.payload
+        messageType : (state,action) => {
+            state.messageType = action.payload
         },
-        reset : (state) => {
-            state.recieveMessage = ''
-        }
+        recieveMessage : (state,action) => {
+            state.socketMessage.push(action.payload)
+        },
     },
 }))
 
 export {messageSlice};
 
-export const {sendMessage,recieveMessage,reset} = messageSlice.actions
+export const {sendMessage,recieveMessage,messageType} = messageSlice.actions
+
+export default messageSlice.reducer
 

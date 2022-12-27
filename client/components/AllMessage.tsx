@@ -1,5 +1,6 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef ,useMemo} from "react";
 import { getCurrentChat } from "../query/useCurrentChat";
 import currentUserDetails from "../query/useCurrentUserDetails";
 import style from "../styles/allMessage.module.css";
@@ -11,13 +12,14 @@ const AllMessage = () => {
   })
   const { user } = useAppSelector((state) => state.userAuth);
   const { socketMessage ,messageType } = useAppSelector(
-    (state) => state.socket
+    (state) => state.message
   );
   const router = useRouter();
   const { index } = router.query;
   const { data } = getCurrentChat(index);
   const { data: currentUser } = currentUserDetails(index);
-  const message = data ? [...data,...socketMessage] : null
+  const message =  data ? [...data,...socketMessage] : null
+  console.log(socketMessage)
   return (
     <div className={style.all_message}>
       <div className={style.all_message_container}>
@@ -32,23 +34,23 @@ const AllMessage = () => {
                       <div className={style.message}>
                         <p> {msg?.text} </p>
                       </div>
-                      <img
+                      <Image
                         src={user?.avatarImg}
                         alt="no image"
                         width={30}
                         height={30}
                         style={{ borderRadius: "50%" }}
-                      ></img>
+                      />
                     </div>
                   ) : (
                     <div className={style.your_message}>
-                      <img
+                      <Image
                         src={currentUser?.avatarImg}
                         alt="no image"
                         width={30}
                         height={30}
                         style={{ borderRadius: "50%" }}
-                      ></img>
+                      />
                       <div className={style.message}>
                         <p> {msg?.text} </p>
                       </div>
@@ -97,7 +99,7 @@ const AllMessage = () => {
           
         </div>
         {
-          messageType ? <div className={style.typing_message} > {currentUser.name} is typing.. </div> : null
+          messageType ? <div className={style.typing_message} > {currentUser?.name} is typing.. </div> : null
         }
       </div>
     </div>

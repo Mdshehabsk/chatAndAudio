@@ -36,8 +36,7 @@ const userRegister = async (req, res, next) => {
         cpassword: hastCpassword,
         avatarImg:result.url
       });
-      await user.save();
-
+       await user.save();
       return res.status(201).json({
         message: "user created successfully",
       });
@@ -46,6 +45,7 @@ const userRegister = async (req, res, next) => {
   }
 };
 const userLogin = async (req, res, next) => {
+  console.log(req.body)
   try {
     const { email, password } = req.body;
     if (!email) {

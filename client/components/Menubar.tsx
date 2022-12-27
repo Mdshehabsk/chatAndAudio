@@ -1,10 +1,11 @@
 import React from 'react'
 import style from '../styles/menuBar.module.css'
-const Menubar = ({activeMenuFn}:{activeMenuFn:(arg0: number)=> void}) => {
+const Menubar = ({activeMenuFn,menu}:{activeMenuFn:(arg0: number)=> void,menu:any}) => {
+  console.log(menu)
   return (
     <div className={style.menu_bar}>
     <div className={style.menu_bar_container} >
-        <div className={style.chat} onClick={() => activeMenuFn(1)} >
+        <div className={  `${style.chat}  ${menu === 1 && style.active} `} onClick={() => activeMenuFn(1)} >
         <i className='bx bx-message-dots'></i>
         </div>
         {/* <div className={style.call} onClick={() => activeMenuFn(2)} >
@@ -18,4 +19,4 @@ const Menubar = ({activeMenuFn}:{activeMenuFn:(arg0: number)=> void}) => {
   )
 }
 
-export default Menubar
+export default React.memo(Menubar)

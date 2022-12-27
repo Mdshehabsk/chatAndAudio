@@ -9,9 +9,13 @@ const useScoket = () => {
     const dispatch = useAppDispatch()
     
     useEffect(()=> {
-        socketIO.on('all-active-user',activeUser => {
+        const activeUser = (activeUser: any) => {
             dispatch(allActiveUser(activeUser))
-        })
+        }
+        socketIO.on('all-active-user',activeUser)
+        return () => {
+            socketIO.off('all-active-user',activeUser)
+        }
     },[])
     const connectionsocket = (userId:string) => {
         dispatch(connectionSocket(userId))

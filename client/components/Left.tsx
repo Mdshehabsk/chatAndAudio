@@ -28,7 +28,7 @@ const Left = ({ styleCss }: { styleCss: any }) => {
       <div className={style.chat_box}>
         <Topbar />
         <Searchbar />
-        <Menubar activeMenuFn={activeMenuFn} />
+        <Menubar activeMenuFn={activeMenuFn} menu={currentMenu} />
         {currentMenu === 1 && (
           <ChatItembox>
             {data &&
@@ -42,11 +42,13 @@ const Left = ({ styleCss }: { styleCss: any }) => {
         {currentMenu === 3 && (
           <ChatItembox>
             {data &&
-              activeUserArr.map((user: ChatItemType, ind: number) => (
-                <Link key={ind} href={`/user/${user._id}`}>
-                  <ChatActiveUser user={user} />
-                </Link>
-              ))}
+              activeUserArr.map((user: ChatItemType, ind: number) => {
+                return (
+                  <Link key={ind} href={`/user/${user._id}`}>
+                    <ChatActiveUser user={user} />
+                  </Link>
+                );
+              })}
           </ChatItembox>
         )}
       </div>

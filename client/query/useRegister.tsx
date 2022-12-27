@@ -12,7 +12,7 @@ const useRegisterFn = async (formData: any) => {
 const useRegister = () => {
   const data: any = useMutation(useRegisterFn);
   return {
-    error: data.error?.response.data,
+    error: data.error?.response?.data,
     data: data.data?.data,
     mutate: data.mutate,
     isLoading: data.isLoading,

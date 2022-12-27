@@ -27,7 +27,6 @@ const getCurrentChat = (userId: string | any) => {
 
 const postChatMessage = (recieverId:string | any) => {
   const { token } = useAppSelector((state) => state.userAuth);
-  const queryClient = useQueryClient()
   const data: any = useMutation((message) => {
     return axios.post(
       `${API_BASE_URL}/api/user/new-message/${recieverId}`,

@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
     const isExist = userExist(data.receiverId);
     if (isExist) {
-      io.to(isExist.socketId).emit("send-message-to-reciever", data);
+      io.to(isExist.socketId).emit("send-message-to-receiver", data);
     }
   });
   // message typing event

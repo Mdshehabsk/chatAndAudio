@@ -22,7 +22,6 @@ const Register = () => {
     avatar: "",
   });
   const { mutate, data, error, isError, isSuccess } = useRegisterMutaion();
-
   if(isSuccess){
     toast.success(data.message, {
       duration: 4000,
