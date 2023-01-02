@@ -39,7 +39,6 @@ const Login = () => {
   const LoginFormSubmit = async (e:any) => {
     e.preventDefault()
     mutate(inputVal)
-    
   }
   
   // useEffect(()=> {
@@ -80,7 +79,7 @@ const Login = () => {
             </div>
             <div className={style.login_input_field} >
               <span>
-                <a  >Forget password?</a>
+                <a>Forget password?</a>
                 </span>
               <span>
                 You dont have any account? <Link href='/register' >Register here</Link>

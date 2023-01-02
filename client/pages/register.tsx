@@ -144,6 +144,9 @@ const Register = () => {
                 name="avatar"
                 id="avatar"
               />
+            {error?.path === "avatar" && (
+                <p className={style.error_msg}> {error.message} </p>
+              )}
             </div>
             <div className={style.register_input_field}>
               <input type="submit" value='Submit'/>

@@ -1,7 +1,6 @@
 import React from 'react'
 import style from '../styles/menuBar.module.css'
 const Menubar = ({activeMenuFn,menu}:{activeMenuFn:(arg0: number)=> void,menu:any}) => {
-  console.log(menu)
   return (
     <div className={style.menu_bar}>
     <div className={style.menu_bar_container} >

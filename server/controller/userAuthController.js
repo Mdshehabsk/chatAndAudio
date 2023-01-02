@@ -1,51 +1,52 @@
 const bcrypt = require("bcrypt");
 const createError = require("http-errors");
-const cloudinary = require('cloudinary')
-const jwt = require('jsonwebtoken')
-cloudinary.config({ 
-  cloud_name: process.env.CLOUD_NAME, 
-  api_key: process.env.API_KEY, 
-  api_secret: process.env.API_SECRET
+const cloudinary = require("cloudinary");
+const jwt = require("jsonwebtoken");
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
 const User = require("../schema/userSchema");
 
 const userRegister = async (req, res, next) => {
   try {
-      const {name,email,password,cpassword} = req.user
-      const avatar = req.avatar
-      const userExist = await User.findOne({ email });
-      if (userExist) {
-        return res.status(400).json({
-          message: "user already exist",
-          path: "email",
-        });
-      }
-      if (password !== cpassword) {
-        return res.status(400).json({
-          message: "password does not match",
-          path: "password",
-        });
-      }
-      const hastPassword = await bcrypt.hash(password, 10);
-      const hastCpassword = await bcrypt.hash(cpassword, 10);
-      const result = await cloudinary.uploader.upload(avatar.filepath, {upload_preset: avatar.originalFilename});
-      const user = new User({
-        name,
-        email,
-        password: hastPassword,
-        cpassword: hastCpassword,
-        avatarImg:result.url
+    const { name, email, password, cpassword } = req.user;
+    const avatar = req.avatar;
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      return res.status(400).json({
+        message: "user already exist",
+        path: "email",
       });
-       await user.save();
-      return res.status(201).json({
-        message: "user created successfully",
+    }
+    if (password !== cpassword) {
+      return res.status(400).json({
+        message: "password does not match",
+        path: "password",
       });
+    }
+    const hastPassword = await bcrypt.hash(password, 10);
+    const hastCpassword = await bcrypt.hash(cpassword, 10);
+    const result = await cloudinary.uploader.upload(avatar.filepath, {
+      upload_preset: avatar.originalFilename,
+    });
+    const user = new User({
+      name,
+      email,
+      password: hastPassword,
+      cpassword: hastCpassword,
+      avatarImg: result.url,
+    });
+    await user.save();
+    return res.status(201).json({
+      message: "user created successfully",
+    });
   } catch (err) {
     next(createError(500, err));
   }
 };
 const userLogin = async (req, res, next) => {
-  console.log(req.body)
   try {
     const { email, password } = req.body;
     if (!email) {
@@ -54,7 +55,7 @@ const userLogin = async (req, res, next) => {
         path: "email",
       });
     }
-    if(!password) {
+    if (!password) {
       return res.status(400).json({
         message: "please input password",
         path: "password",
@@ -74,10 +75,14 @@ const userLogin = async (req, res, next) => {
         path: "password",
       });
     }
-    const token = jwt.sign({id:user._id,email:user.email,avatarImg:user.avatarImg},process.env.JWT_SECRET,{expiresIn:'36h'})
+    const token = jwt.sign(
+      { id: user._id, email: user.email, avatarImg: user.avatarImg },
+      process.env.JWT_SECRET,
+      { expiresIn: "36h" }
+    );
     return res.status(200).json({
       message: "login successfully",
-      token
+      token,
     });
   } catch (err) {
     return next(createError(500, err));
