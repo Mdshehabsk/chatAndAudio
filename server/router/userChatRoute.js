@@ -16,14 +16,18 @@ router.get("/chat-item", TokenVerfiy, async (req, res, next) => {
 router.get("/conversation/:userId", TokenVerfiy, async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const {message} = await Conversation.findOne({
+    const data = await Conversation.findOne({
       $or: [
         { senderId: req.user.id, receiverId: userId },
         { senderId: userId, receiverId: req.user.id },
       ],
       
     });
-    res.status(200).json(message);
+    if(data) 
+    res.status(200).json(data.message);
+    else {
+      res.status(200).json([])
+    }
   } catch (err) {
     next(err);
   }
@@ -48,20 +52,6 @@ router.post("/new-message/:receiverId", TokenVerfiy, async (req, res, next) => {
         text:req.body.message
       })
       await isConversation.save()
-      console.log(isConversation);
-      // await Conversation.updateMany({
-      //   $or: [
-      //     { senderId: req.user.id, receiverId: receiverId },
-      //     { senderId: receiverId, receiverId: req.user.id },
-      //     {message: [
-      //       {
-      //         senderId: req.user.id,
-      //         receiverId,
-      //         text: req.body.message,
-      //       },
-      //     ]}
-      //   ],
-      // }).save();
     } else {
       await Conversation({
         senderId: req.user.id,
