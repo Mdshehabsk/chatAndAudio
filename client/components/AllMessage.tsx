@@ -1,12 +1,17 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef ,useMemo} from "react";
+import React, { useEffect, useRef } from "react";
 import { getCurrentChat } from "../query/useCurrentChat";
 import currentUserDetails from "../query/useCurrentUserDetails";
 import style from "../styles/allMessage.module.css";
-import {  useAppSelector } from "../toolkit/store/hook";
+import { reset } from "../toolkit/slice/messageSlice";
+import {  useAppDispatch, useAppSelector } from "../toolkit/store/hook";
 const AllMessage = () => {
+  const dispatch = useAppDispatch()
   const div = useRef<any>();
+  useEffect(()=> {
+    dispatch(reset())
+  },[])
   useEffect(()=> {
     div.current.scrollTop = div.current.scrollHeight - div.current.clientHeight;
   })
@@ -33,23 +38,23 @@ const AllMessage = () => {
                       <div className={style.message}>
                         <p> {msg?.text} </p>
                       </div>
-                      <Image
-                        src={user?.avatarImg}
-                        alt="no image"
-                        width={30}
-                        height={30}
-                        style={{ borderRadius: "50%" }}
-                      />
-                    </div>
-                  ) : (
-                    <div className={style.your_message}>
-                      <Image
+                      {   currentUser?.avatarImg &&  <Image
                         src={currentUser?.avatarImg}
                         alt="no image"
                         width={30}
                         height={30}
                         style={{ borderRadius: "50%" }}
-                      />
+                      />}
+                    </div>
+                  ) : (
+                    <div className={style.your_message}>
+                 {   currentUser?.avatarImg &&  <Image
+                        src={currentUser?.avatarImg}
+                        alt="no image"
+                        width={30}
+                        height={30}
+                        style={{ borderRadius: "50%" }}
+                      />}
                       <div className={style.message}>
                         <p> {msg?.text} </p>
                       </div>

@@ -2,7 +2,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import chatItem from "../query/useChatItem";
 import style from "../styles/left.module.css";
-import { useAppSelector } from "../toolkit/store/hook";
+import { reset } from "../toolkit/slice/messageSlice";
+import { useAppDispatch, useAppSelector } from "../toolkit/store/hook";
 import ChatItemType from "../types/chatItemTypes";
 import ChatActiveUser from "./ChatActiveUser";
 import ChatItembox from "./ChatItembox";
@@ -11,6 +12,7 @@ import Menubar from "./Menubar";
 import Searchbar from "./Searchbar";
 import Topbar from "./Topbar";
 const Left = ({ styleCss }: { styleCss: any }) => {
+  const dispatch = useAppDispatch()
   const [currentMenu, setCurrentMenu] = useState<number>(1);
   const { data, error } = chatItem();
   const { activeUser } = useAppSelector((state) => state.socket);
@@ -21,6 +23,7 @@ const Left = ({ styleCss }: { styleCss: any }) => {
       activeUser.some((x: any) => user._id == x.userId)
     );
   const activeMenuFn = (value: number) => {
+    dispatch(reset())
     setCurrentMenu(value);
   };
   return (

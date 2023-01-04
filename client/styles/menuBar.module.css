@@ -26,8 +26,8 @@
     cursor: pointer;
     transition: all .4s ease;
 }
-.active {
-    color: var(--blue-color);
+.active i{
+    color: var(--blue-color) !important ;
     font-size: 25px;
     cursor: pointer;
     transition: all .4s ease;

@@ -26,12 +26,15 @@ const messageSlice = createSlice(({
         recieveMessage : (state,action) => {
             state.socketMessage.push(action.payload)
         },
+        reset: state => {
+            state.socketMessage = []
+        }
     },
 }))
 
 export {messageSlice};
 
-export const {sendMessage,recieveMessage,messageType} = messageSlice.actions
+export const {sendMessage,recieveMessage,messageType,reset} = messageSlice.actions
 
 export default messageSlice.reducer
 
