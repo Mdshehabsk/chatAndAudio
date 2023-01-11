@@ -11,7 +11,7 @@ const Container = ({styleCss}:{styleCss:any}) => {
     <div className={styleCss.container}>
         {callModal && <CallModal />}
         {
-          callPageModal && <CallPageModal/>
+         callPageModal && <CallPageModal/>
         }
         <Left styleCss={styleCss} />
         <Right styleCss={styleCss} /> 

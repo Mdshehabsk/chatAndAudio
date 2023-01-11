@@ -5,25 +5,25 @@ import { getCurrentChat } from "../query/useCurrentChat";
 import currentUserDetails from "../query/useCurrentUserDetails";
 import style from "../styles/allMessage.module.css";
 import { reset } from "../toolkit/slice/messageSlice";
-import {  useAppDispatch, useAppSelector } from "../toolkit/store/hook";
+import { useAppDispatch, useAppSelector } from "../toolkit/store/hook";
 const AllMessage = () => {
   const dispatch = useAppDispatch()
   const div = useRef<any>();
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(reset())
-  },[])
-  useEffect(()=> {
+  }, [])
+  useEffect(() => {
     div.current.scrollTop = div.current.scrollHeight - div.current.clientHeight;
   })
   const { user } = useAppSelector((state) => state.userAuth);
-  const { socketMessage ,messageType } = useAppSelector(
+  const { socketMessage, messageType } = useAppSelector(
     (state) => state.message
   );
   const router = useRouter();
   const { index } = router.query;
   const { data } = getCurrentChat(index);
   const { data: currentUser } = currentUserDetails(index);
-  const message =  data ? [...data,...socketMessage] : null
+  const message = data ? [...data, ...socketMessage] : null
   return (
     <div className={style.all_message}>
       <div className={style.all_message_container}>
@@ -38,17 +38,17 @@ const AllMessage = () => {
                       <div className={style.message}>
                         <p> {msg?.text} </p>
                       </div>
-                      {   currentUser?.avatarImg &&  <Image
-                        src={currentUser?.avatarImg}
+                       <Image
+                        src={user.avatarImg}
                         alt="no image"
                         width={30}
                         height={30}
                         style={{ borderRadius: "50%" }}
-                      />}
+                      />
                     </div>
                   ) : (
                     <div className={style.your_message}>
-                 {   currentUser?.avatarImg &&  <Image
+                      {currentUser?.avatarImg && <Image
                         src={currentUser?.avatarImg}
                         alt="no image"
                         width={30}
@@ -63,7 +63,7 @@ const AllMessage = () => {
                 </React.Fragment>
               );
             })}
-{/*                      
+          {/*                      
                      { 
                       socketMessage.length > 0 && socketMessage.map((elem:any,i:number)=> {
                         return (
@@ -100,14 +100,14 @@ const AllMessage = () => {
                         )
                       })
                     } */}
-          
+
         </div>
         {
           messageType ? <div className={style.typing_message} > {currentUser?.name} is typing.. </div> : null
         }
       </div>
     </div>
-    
+
   );
 };
 

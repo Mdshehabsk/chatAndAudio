@@ -6,11 +6,13 @@ import { store } from '../toolkit/store/store'
 import { Provider } from 'react-redux'
 import { QueryClient,  QueryClientProvider} from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import NextNProgress from 'nextjs-progressbar';
 const queryClient = new QueryClient()
 export default function App({ Component, pageProps }: AppProps) {
   return <Provider store={store} >
     <QueryClientProvider client={queryClient} >
     <Layout>
+    <NextNProgress />
       <Component {...pageProps} />
     </Layout>
     <ReactQueryDevtools initialIsOpen={false} />

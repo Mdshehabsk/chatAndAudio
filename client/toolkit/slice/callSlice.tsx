@@ -64,11 +64,14 @@ const callSlice = createSlice({
             const connectedUserSocketId = action.payload
             state.connectedUserSocketId = connectedUserSocketId
         },
+        hangUpCall : state => {
+            state.callPageModal = false
+        },
         removeCallModal : state => {
             state.callModal = false
         }
     }
 })
 
-export const {callSend,callReceive,removeCallModal,acceptCallHander,callAcceptByReceiver} = callSlice.actions
+export const {callSend,callReceive,removeCallModal,acceptCallHander,callAcceptByReceiver,hangUpCall} = callSlice.actions
 export default callSlice.reducer;

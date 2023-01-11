@@ -22,7 +22,7 @@ const CallModal = () => {
   useEffect(()=> {
     setTimeout(() => {
       dispatch(removeCallModal())
-    }, 6000);
+    }, 10000);
   },[])
   let callModal;
 

@@ -70,7 +70,7 @@ const MessageInput = () => {
             <i className="bx bx-send"></i> 
           </div>
         </div>
-        <div
+        {/* <div
           className={`${style.input_icon} ${inputFull ? style.none : null} `}
         >
           <div className={style.mic_icon}>
@@ -79,7 +79,7 @@ const MessageInput = () => {
           <div className={style.image}>
             <i className="bx bx-image"></i>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -4,8 +4,20 @@ import Head from "next/head";
 import style from '../../styles/index2.module.css'
 
 import Container from "../../components/Container";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "../../toolkit/store/hook";
+import { useEffect } from "react";
+import { getToken } from "../../toolkit/slice/userAuthSlice";
 const User = () => {
-  
+  const router = useRouter()
+  const dispatch = useAppDispatch()
+  const {user} = useAppSelector(state => state.userAuth)
+  useEffect(()=>{
+    dispatch(getToken())
+    if(!user){
+      router.push('/login')
+    }
+  },[])
   return (
     <>
       <Head>

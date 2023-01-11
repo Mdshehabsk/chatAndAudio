@@ -1,8 +1,6 @@
 import style from "../styles/chatUser.module.css";
 import Image from "next/image";
-import avatar from "../image/avatar.jpg";
 import ChatItemType from "../types/chatItemTypes";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { getCurrentChat } from "../query/useCurrentChat";
 import { useAppSelector } from "../toolkit/store/hook";
@@ -50,9 +48,8 @@ const ChatUser = ({ user, activeUserArr }: propsType) => {
           </p>
         </div>
       </div>
-      <div className={style.right}>
-        <h5> {"nice"} </h5>
-      </div>
+      {/* <div className={style.right}>
+      </div> */}
     </div>
   );
 };

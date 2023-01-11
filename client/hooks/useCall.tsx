@@ -5,9 +5,11 @@ import {
   acceptCallHander,
   callAcceptByReceiver,
   removeCallModal,
+  hangUpCall as HanUpCall
 } from "../toolkit/slice/callSlice";
 import { useCallback, useEffect, useMemo } from "react";
 import { socketIO } from "../toolkit/slice/socketSlice";
+import { store } from "../toolkit/store/store";
 const configuration = {
   iceServers: [
     {
@@ -30,61 +32,59 @@ const configuration = {
     },
   ],
 };
-let peerConnection: RTCPeerConnection,localStream : MediaStream,remoteStream:MediaStream
+let peerConnection: RTCPeerConnection | any, localStream: MediaStream | any, remoteStream: MediaStream;
 // here is the audio stream
 const getLocalAudio = async () => {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({audio:true})
-    localStream = stream
-  }catch(err){
-    console.log(err)
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    localStream = stream;
+  } catch (err) {
+    console.log(err);
   }
-
-}
-const createPc = async (connectedUserSocketId?:string) => {
+};
+const createPc = async (connectedUserSocketId?: string) => {
   peerConnection = new RTCPeerConnection(configuration);
-  peerConnection.onicecandidate = (event) => {
+  peerConnection.onicecandidate = (event: { candidate: any; }) => {
     if (event.candidate) {
       sendWebRTCOfferUsingSignaling({
-        type:'iceCandidate',
-        candidate:event.candidate,
-        connectedUserSocketId
-      })
+        type: "iceCandidate",
+        candidate: event.candidate,
+        connectedUserSocketId,
+      });
     }
   };
-  peerConnection.onsignalingstatechange = (_event) => {
+  peerConnection.onsignalingstatechange = () => {
     if (peerConnection.connectionState === "connected") {
       console.log(`successfull connected to other user`);
     }
   };
-  remoteStream = new MediaStream()
-  peerConnection.ontrack = event => {
-    remoteStream.addTrack(event.track)
-  }
+  remoteStream = new MediaStream();
+  peerConnection.ontrack = (event: { track: MediaStreamTrack; }) => {
+    remoteStream.addTrack(event.track);
+  };
   localStream?.getTracks().forEach((track: MediaStreamTrack) => {
-    peerConnection.addTrack(track,localStream)
-  })
-  
+    peerConnection.addTrack(track, localStream);
+  });
 };
-socketIO.on('webRTC-signaling',data => {
-  switch(data.type){
-    case 'offer':
-      handleWebRTCOffer(data)
-    break;
-    case 'answer':
-      handleWebRTCAnswer(data)
-    break;
-    case 'iceCandidate':
-      handleWebRTCCandidate(data)
+socketIO.on("webRTC-signaling", (data) => {
+  switch (data.type) {
+    case "offer":
+      handleWebRTCOffer(data);
+      break;
+    case "answer":
+      handleWebRTCAnswer(data);
+      break;
+    case "iceCandidate":
+      handleWebRTCCandidate(data);
   }
-})
+});
 const sendWebRTCOfferUsingSignaling = (data: any) => {
   socketIO.emit("webRTC-signaling", data);
 };
 const sendRTCOffer = async () => {
   const offer = await peerConnection.createOffer();
   peerConnection.setLocalDescription(offer);
-  return offer
+  return offer;
 };
 const handleWebRTCOffer = async (data: any) => {
   try {
@@ -101,27 +101,37 @@ const handleWebRTCOffer = async (data: any) => {
   }
 };
 const handleWebRTCAnswer = async (data: any) => {
- try {
-  await peerConnection.setRemoteDescription(data.answer);
- }catch(err){
-  console.log(err)
- }
+  try {
+    await peerConnection.setRemoteDescription(data.answer);
+  } catch (err) {
+    console.log(err);
+  }
 };
 const handleWebRTCCandidate = async (data: any) => {
   try {
-    await peerConnection.addIceCandidate(data.candidate)
+    await peerConnection.addIceCandidate(data.candidate);
+  } catch (err) {
+    console.log(err);
   }
-  catch(err){
-    console.log(err)
-  }
+};
+const audioToggle = (micToggle: Boolean) => {
+  const micEnable = localStream.getAudioTracks()[0].enabled;
+  localStream.getAudioTracks()[0].enabled = !micEnable
+};
+const hangUpCall = async (e:any) => {
+  peerConnection.close()
+  peerConnection = null
+  localStream.getTracks().forEach((track: any) => {
+      track.stop()
+  })
+  store.dispatch(HanUpCall())
 }
-
 const useCall = () => {
   const dispatch = useAppDispatch();
   const { connectedUserSocketId } = useAppSelector((state) => state.call);
   const { user } = useAppSelector((state) => state.userAuth);
   const callsend = (data: any) => {
-    getLocalAudio()
+    getLocalAudio();
     dispatch(
       callSend({
         ...data,
@@ -138,18 +148,17 @@ const useCall = () => {
       offer,
       connectedUserSocketId,
     });
-    
   };
   useEffect(() => {
     socketIO.on("call-receive", (data) => {
-      getLocalAudio()
+      getLocalAudio();
       dispatch(callReceive(data));
     });
   }, []);
   useEffect(() => {
     socketIO.on("accept-call-by-receiver", (data) => {
       const { connectedUserSocketId } = data;
-      createPc(connectedUserSocketId)
+      createPc(connectedUserSocketId);
       dispatch(callAcceptByReceiver(connectedUserSocketId));
     });
   }, []);
@@ -157,9 +166,10 @@ const useCall = () => {
     callsend,
     acceptCall,
     localStream,
-    remoteStream
+    remoteStream,
+    audioToggle,
+    hangUpCall
   };
 };
 
 export default useCall;
-

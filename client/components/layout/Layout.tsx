@@ -6,15 +6,7 @@ import useScoket from '../../hooks/useSocket'
 
 const Layout = ({children}:any) => {
   const {connectionsocket}  = useScoket()
-  const router = useRouter()
-  const dispatch = useAppDispatch()
   const {user} = useAppSelector(state => state.userAuth)
-  useEffect(()=>{
-    dispatch(getToken())
-    if(!user){
-      router.push('/login')
-    }
-  },[])
   useEffect(()=> {
     if(user){
       connectionsocket(user.id)

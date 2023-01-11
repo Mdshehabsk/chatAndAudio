@@ -45,9 +45,9 @@ const ChatActiveUser = ({ user }: propsType) => {
           </p>
         </div>
       </div>
-      <div className={style.right}>
+      {/* <div className={style.right}>
         <h5> {"nice"} </h5>
-      </div>
+      </div> */}
     </div>
   );
 };

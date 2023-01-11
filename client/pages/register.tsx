@@ -9,6 +9,9 @@ import style from "../styles/register.module.css";
 import UserType from "../types/registerInputType";
 
 import useRegisterMutaion from "../query/useRegister";
+
+import { Circles } from "react-loader-spinner";
+
 const Register = () => {
   const router = useRouter();
   const [passwordShow, setPasswordShow] = useState(false);
@@ -21,7 +24,7 @@ const Register = () => {
     cpassword: "",
     avatar: "",
   });
-  const { mutate, data, error, isError, isSuccess } = useRegisterMutaion();
+  const { mutate, data, error, isError, isSuccess ,isLoading} = useRegisterMutaion();
   if(isSuccess){
     toast.success(data.message, {
       duration: 4000,
@@ -48,7 +51,7 @@ const Register = () => {
     formData.append("avatar", avatar);
     mutate(formData);
   };
-
+  console.log(isLoading)
   return (
     <>
       <div className={style.register_wrapper}>
@@ -148,8 +151,21 @@ const Register = () => {
                 <p className={style.error_msg}> {error.message} </p>
               )}
             </div>
-            <div className={style.register_input_field}>
-              <input type="submit" value='Submit'/>
+            <div  className={style.register_input_field}>
+             
+              {
+                isLoading ? <Circles
+                
+                height="40"
+                width="40"
+                color="#4fa94d"
+                ariaLabel="circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                
+              /> :  <input type="submit" value='Submit'/>
+              }
             </div>
             <div className={style.register_input_field}>
               <span>
