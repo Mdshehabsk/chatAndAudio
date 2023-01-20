@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com'], //Domain of image host
   },
+  reactStrictMode:false
 }
 
 module.exports = nextConfig

@@ -5,26 +5,27 @@ import { useEffect } from "react";
 import {socketIO }from '../toolkit/slice/socketSlice'
 import chatItem from "../query/useChatItem";
 const useMessage = () => {
-    const {data} = chatItem()
     const dispatch = useAppDispatch()
+   
     useEffect(()=> {
         const sendMessageToReceiver = (data: any) => {
             dispatch(recieveMessage(data))
         }
         socketIO.on('send-message-to-receiver',sendMessageToReceiver)
-        return () => {
-            socketIO.off('send-message-to-reciever',sendMessageToReceiver)
+
+        return function () {
+            socketIO.off('send-message-to-receiver',sendMessageToReceiver)
         }
-    },[socketIO])
+    },[])
     useEffect(()=> {
         const typingMessage = (data: { typing: any; }) => {
             dispatch(messageType(data.typing))
         }
         socketIO.on('typing-message', typingMessage)
-        return () => {
+        return function () {
             socketIO.off('typing-message',typingMessage)
         }
-    },[socketIO])
+    },[])
     const typingMessage = (data: any) => {
         socketIO.emit('typing-message',data)
     }   

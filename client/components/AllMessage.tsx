@@ -24,6 +24,7 @@ const AllMessage = () => {
   const { data } = getCurrentChat(index);
   const { data: currentUser } = currentUserDetails(index);
   const message = data ? [...data, ...socketMessage] : null
+  console.log(socketMessage)
   return (
     <div className={style.all_message}>
       <div className={style.all_message_container}>
