@@ -12,11 +12,11 @@ const userDetails = () => {
     });
   },{refetchOnWindowFocus:false});
   return {
-    isLoading: data.isLoading,
-    isFetching: data.isFetched,
-    error: data.error?.response.data,
-    data:data.data?.data,
-    isError:data.isError,
+    isLoading: data?.isLoading,
+    isFetching: data?.isFetched,
+    error: data?.error?.response?.data,
+    data:data?.data?.data,
+    isError:data?.isError,
   };
 };
 
